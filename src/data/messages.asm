@@ -37,76 +37,75 @@
     AKPRINT AKPRINTRLEOFF STRING.length AKPRINTDOWN STRING
 .ENDM
 
+.MACRO AKPRINTLEFT ARGS STRING
+    AKPRINT AKPRINTRLEOFF STRING.length AKPRINTLEFT STRING
+.ENDM
+
+.MACRO AKPRINTUP ARGS STRING
+    AKPRINT AKPRINTRLEOFF STRING.length AKPRINTUP STRING
+.ENDM
+
+
 .MACRO AKPRINTEND
     .DB $00 $00
 .ENDM
 
 txtShopWelcome:
-;.INCBIN "src/text/bin/shopWelcome.bin"
-AKPRINTRLERIGHT $1C " "
-AKPRINTRLEDOWN $4 " "
-AKPRINTRLELEFT $1A " "
-AKPRINTRLEUP $3 " "
-AKPRINTRIGHT "WELCOME! PLEASE BUY      "
-AKPRINTDOWN " "
-AKPRINTRLELEFT $18 " "
-AKPRINTDOWN "T"
-AKPRINTRIGHT "HE THINGS THAT YOU LIKE."
-AKPRINTEND
+.INCLUDE "src/data/messages/shopWelcome.asm"
 
 txtShopInsufficientFunds:
-.INCBIN "src/text/bin/shopInsufficientFunds.bin"
+.INCLUDE "src/data/messages/shopInsufficientFunds.asm"
 
 txtShopItemPurchased:
-.INCBIN "src/text/bin/shopItemPurchased.bin"
+.INCLUDE "src/data/messages/shopItemPurchased.asm"
 
 txtParplinIntroduction:
-.INCBIN "src/text/bin/parplinIntroduction.bin"
+.INCLUDE "src/data/messages/parplinIntroduction.asm"
 
 txtChokkinnaIntroduction:
-.INCBIN "src/text/bin/chokkinnaIntroduction.bin"
+.INCLUDE "src/data/messages/chokkinnaIntroduction.asm"
 
 txtGoosekaIntroduction:
-.INCBIN "src/text/bin/goosekaIntroduction.bin"
+.INCLUDE "src/data/messages/goosekaIntroduction.asm"
 
 txtBattleGuide:
-.INCBIN "src/text/bin/battleGuide.bin"
+.INCLUDE "src/data/messages/battleGuide.asm"
 
 txtBattleRoundLost:
-.INCBIN "src/text/bin/battleRoundLost.bin"
+.INCLUDE "src/data/messages/battleRoundLost.asm"
 
 txtBattleRoundWon:
-.INCBIN "src/text/bin/battleRoundWon.bin"
+.INCLUDE "src/data/messages/battleRoundWon.asm"
 
 txtBattleRoundTie:
-.INCBIN "src/text/bin/battleRoundTie.bin"
+.INCLUDE "src/data/messages/battleRoundTie.asm"
 
 txtBossFight:
-.INCBIN "src/text/bin/bossFight.bin"
+.INCLUDE "src/data/messages/bossFight.asm"
 
 txtJankenIntroduction:
-.INCBIN "src/text/bin/jankenIntroduction.bin"
+.INCLUDE "src/data/messages/jankenIntroduction.asm"
 
 txtSaintNurari:
-.INCBIN "src/text/bin/saintNurari.bin"
+.INCLUDE "src/data/messages/saintNurari.asm"
 
 txtVillageElder:
-.INCBIN "src/text/bin/villageElder.bin"
+.INCLUDE "src/data/messages/villageElder.asm"
 
 txtEgle:
-.INCBIN "src/text/bin/egle.bin"
+.INCLUDE "src/data/messages/egle.asm"
 
 txtKingHighStone:
-.INCBIN "src/text/bin/kingHighStone.bin"
+.INCLUDE "src/data/messages/kingHighStone.asm"
 
 txtKingHighStoneNoLetter:
-.INCBIN "src/text/bin/kingHighStoneNoLetter.bin"
+.INCLUDE "src/data/messages/kingHighStoneNoLetter.asm"
 
 txtPrincessLora:
-.INCBIN "src/text/bin/princessLora.bin"
+.INCLUDE "src/data/messages/princessLora.asm"
 
 txtBattleLost:
-.INCBIN "src/text/bin/battleLost.bin"
+.INCLUDE "src/data/messages/battleLost.asm"
 
 txtShopSoldOut:
-.INCBIN "src/text/bin/shopSoldOut.bin"
+.INCLUDE "src/data/messages/shopSoldOut.asm"
