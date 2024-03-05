@@ -17,7 +17,7 @@ initLevelStartingState:
     ld a, $03
     ld (v_nextMapNametableUpdateTimer), a
 
-    ld a, :tiles_map | $80
+    ld a, :mapTiles | $80
     ld (Mapper_Slot2), a
 
     ; Load pallete
@@ -32,7 +32,7 @@ initLevelStartingState:
     call writeAToVRAM
 
     ; Decompress map tiles to VRAM
-    ld hl, tiles_map
+    ld hl, mapTiles
     ld de, $4000
     call decompressTilesToVram
 

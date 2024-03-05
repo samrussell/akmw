@@ -189,17 +189,17 @@ _LABEL_1D04_:
     call load1bppTiles
     ld a, $85
     ld (Mapper_Slot2), a
-    ld hl, _DATA_153F3_
+    ld hl, shopInteriorTiles
     ld de, $4520
     call decompressTilesToVram
-    ld hl, _DATA_15840_
+    ld hl, shopExitDoorTiles
     ld de, $4E00
     call decompressTilesToVram
     ld de, _RAM_CB08_
     ld hl, _DATA_15800_
     ld bc, $0808
     call copyTileBlock
-    ld hl, tiles_magicCapsules
+    ld hl, shopItemTiles
     ld de, $5200
     ld bc, $01C0
     call copyBytesToVRAM

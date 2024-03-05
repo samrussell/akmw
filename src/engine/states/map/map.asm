@@ -425,12 +425,12 @@ initMapState:
     ld (Mapper_Slot2), a
 
     ; Load map tiles
-    ld hl, tiles_map
+    ld hl, mapTiles
     ld de, $4000
     call decompressTilesToVram
 
     ; Load Magic Capsules tiles
-    ld hl, tiles_magicCapsules
+    ld hl, shopItemTiles
     ld de, $5980
     ld bc, $01C0
     call copyBytesToVRAM
@@ -907,7 +907,7 @@ _LABEL_25D3_:
     ld de, $7892
     ld bc, $1218
     call copyNameTableBlockToVram
-    ld hl, _DATA_15AD4_
+    ld hl, hirotaStoneCloseUpTiles
     ld de, $4000
     call decompressTilesToVram
     ld a, $82

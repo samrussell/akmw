@@ -20,7 +20,7 @@ echo Compiling
 wla-z80 -I src -D _REV0 -o tmp/baserom_rev0.o src/baserom.asm
 wla-z80 -I src -D _REV1 -o tmp/baserom_rev1.o src/baserom.asm
 
-rm -f build/*
+rm -rf build/*
 
 echo Linking
 wlalink -d -S -b linkfile_rev0 build/alex-kidd-in-miracle-world-usa-europe.sms
