@@ -35,6 +35,32 @@ def compress_tiles(file):
             else:
                 data = []
                 count = 0
+                # edge case: if we go 0x7F chars with only doubles then make a note to stop there
+                future_data = input.read(0x7e)
+                input.seek(-len(future_data), SEEK_CUR)
+                would_max_data = False
+                max_data_offset = 0
+                if len(future_data) == 0x7e:
+                    for i in range(len(future_data)-1):
+                        would_max_data = True
+                        if future_data[i] == future_data[i+1]:
+                            # we are really guessing here
+                            # they don't pick the end, they pick one in the middle
+                            # im guessing a 0x40 byte window
+                            if i < 0x40:
+                                max_data_offset = i
+                            # case 3: out of data
+                            if i + 2 == len(future_data):
+                                would_max_data = False
+                                break
+                            # case 1: we have 3 in a row
+                            if future_data[i+2] == future_data[i]:
+                                would_max_data = False
+                                break
+                            # case 2: we have 2x2
+                            if future_data[i+2] == future_data[i+3]:
+                                would_max_data = False
+                                break
                 while True:
                     chunk = input.read(1)
                     if not chunk:
@@ -43,20 +69,47 @@ def compress_tiles(file):
                         break
                     next_char = chunk[0]
                     if next_char == first_char:
+                        # if there's nothing interesting in 0x7f bytes then just return this
+                        if would_max_data and count-1 == max_data_offset:
+                            input.seek(-2, SEEK_CUR)
+                            break
                         chunk = input.read(2)
                         # case 1: we have 3 in a row
                         if chunk and chunk[0] == next_char:
                             input.seek(-2 - len(chunk), SEEK_CUR)
                             break
                         # case 2: we have 2x2 in a row
-                        if chunk and chunk[0] == chunk[1]:
+                        if chunk and len(chunk) == 2 and chunk[0] == chunk[1]:
                             input.seek(-2 - len(chunk), SEEK_CUR)
                             break
+                        # case 3: there are no more bytes to read
+                        if not chunk:
+                            input.seek(-2, SEEK_CUR)
+                            break
                         input.seek(-len(chunk), SEEK_CUR)
+                    else:
+                        # edge case 4: last char is 0
+                        # i can't think of a sensible reason for this
+                        # they end the stream 1 byte early
+                        # then place a 81 00
+                        # for the final 0
+                        # if we enable this other files break and i have no idea why
+                        # so we'll put in as a hack
+                        if next_char == 0:
+                            chunk = input.read(1)
+                            if not chunk:
+                                if file.name == 'build/sprites/uncompressed/alexKiddEatingRiceBall.bin':
+                                    data.append(first_char)
+                                    count += 1
+                                    input.seek(-1, SEEK_CUR)
+                                    break
+                            else:
+                                input.seek(-1, SEEK_CUR)
                     data.append(first_char)
                     first_char = next_char
                     count += 1
                     if count == 0x7f:
+                        input.seek(-1, SEEK_CUR)
                         break
                 count_and_flag = RLE_FLAG | count
             output.append(count_and_flag)

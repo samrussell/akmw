@@ -309,7 +309,7 @@ initMapState:
     ld de, v_nametable + $8
 
     ld (v_currentMapNametableDestinationPointer), de
-    ld hl, chokkinnaTilesB
+    ld hl, _DATA_15E75_
     ld (v_currentMapOrTextNametablePointer), hl
 
     -:

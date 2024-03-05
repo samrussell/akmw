@@ -2,6 +2,20 @@ mkdir -p tmp build
 
 rm -f tmp/* 
 
+mkdir build/sprites
+mkdir build/sprites/compressed
+mkdir build/sprites/uncompressed
+
+echo Generating sprites
+python3 tools/png-to-tiles.py src/graphics/4bppCharacters.png build/sprites/4bppCharacters-decompressed.bin
+python3 tools/compress-4bpp-tiles.py build/sprites/4bppCharacters-decompressed.bin build/sprites/4bppCharacters.bin
+for file in src/graphics/boxes/*.png; do name=$(basename "${file%.*}"); python3 tools/png-to-tiles.py $file build/sprites/$name.bin ; done
+# compressed sprites
+for file in src/graphics/compressed/*.png; do name=$(basename "${file%.*}"); python3 tools/png-to-tiles.py $file build/sprites/uncompressed/$name.bin ; done
+for file in build/sprites/uncompressed/*.bin; do name=$(basename "${file%.*}"); python3 tools/compress-4bpp-tiles.py $file build/sprites/compressed/$name.bin ; done
+# uncompressed sprites
+for file in src/graphics/uncompressed/*.png; do name=$(basename "${file%.*}"); python3 tools/png-to-tiles.py $file build/sprites/uncompressed/$name.bin ; done
+
 echo Compiling
 wla-z80 -I src -D _REV0 -o tmp/baserom_rev0.o src/baserom.asm
 wla-z80 -I src -D _REV1 -o tmp/baserom_rev1.o src/baserom.asm

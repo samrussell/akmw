@@ -20,7 +20,7 @@ opponentSettings:
 .db $00
 
 .dw opponentSpriteDescriptor
-.dw chokkinnaTilesA
+.dw chokkinnaTiles
 .dw chokkinnaName
 .dw opponentDancingAnimationDescriptor 
 .dw chokkinnaCountingAnimationDescriptor
